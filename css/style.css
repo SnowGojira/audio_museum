@@ -4,3 +4,7 @@ html,body {
     background: #f9f9f9;
     overflow-x: hidden;
 }
+
+none{
+    display: none;
+}
