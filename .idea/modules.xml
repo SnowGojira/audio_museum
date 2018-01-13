@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../audio_musem_of_chengdu/.idea/the-audio-of-CD.iml" filepath="$PROJECT_DIR$/../audio_musem_of_chengdu/.idea/the-audio-of-CD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/audio_museum.iml" filepath="$PROJECT_DIR$/.idea/audio_museum.iml" />
     </modules>
   </component>
 </project>
