@@ -134,3 +134,137 @@ none{
                     width: 3vw;
                     margin-top: 0.8rem;
                 }
+        #pageAudioPlayer .record_wrap{
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: center;
+        }
+        #pageAudioPlayer .record_wrap img{
+            width: 75vw;
+            margin-top: 11vh;
+        }
+
+        @-webkit-keyframes rotate{
+    from{
+        transform: rotate(0deg)
+    }to{
+         transform: rotate(360deg)
+     }
+}
+        @keyframes rotate{
+    from{
+        transform: rotate(0deg)
+    }to{
+         transform: rotate(360deg)
+     }
+}
+
+
+/* 歌曲信息模块 */
+        #pageAudioPlayer .g-songinfo{
+            margin-top: 2rem;
+            height: auto;
+        }
+        #pageAudioPlayer .m-songinfo{
+            width: 70%;
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+            letter-spacing: 7px;
+        }
+        #pageAudioPlayer .m-songinfo .songname,#pageAudioPlayer .m-songinfo .singer{
+            text-align: center;
+
+            margin-bottom: 0;
+        }
+        #pageAudioPlayer .m-songinfo .songname{
+            font-size: 3rem;
+            font-weight:  bold;
+            color: #565761;
+            /* margin-top: 0.44rem; */
+        }
+        #pageAudioPlayer .m-songinfo .songdesc{
+            margin-top: 3rem;
+            font-size: 1.5rem;
+            color:#a8acb1;
+            line-height: 3.0rem;
+        }
+
+
+/* 音乐控制模块 */
+        #pageAudioPlayer .g-panel{
+            height: auto;
+        }
+        #pageAudioPlayer .g-panel .m-progress{
+            margin: 0 auto;
+            height: 1rem;
+        }
+        #pageAudioPlayer .g-panel .m-progress .songtime{
+            font-size: 0.18rem;
+            position:relative;
+            top: 3rem;
+        }
+        #pageAudioPlayer .g-panel .m-progress .start{
+            float:left;
+        }
+        #pageAudioPlayer .g-panel .m-progress .end{
+            float:right;
+        }
+
+        #pageAudioPlayer .m-playcontrol{
+            width: 70vw;
+            margin: 0.34rem auto 0;
+            text-align: center;
+            /* display:  flex; */
+        }
+        #pageAudioPlayer .m-playcontrol .btn{
+            display: inline-block;
+            background-size: cover;
+
+        }
+        #pageAudioPlayer .m-playcontrol .btn-prev{
+            width: 3.5rem;
+            height: 2.6rem;
+            background: url(../img/prev.png) no-repeat center center;
+            background-size: cover;
+        }
+
+        #pageAudioPlayer .m-playcontrol .btn-next{
+            width: 3.5rem;
+            height: 2.6rem;
+            background: url(../img/next.png) no-repeat center center;
+            background-size: cover;
+        }
+        #pageAudioPlayer .m-playcontrol .btn-play, #pageAudioPlayer .m-playcontrol .btn-pause{
+            width: 7rem;
+            height: 7rem;
+            margin-left: 9rem;
+            margin-right: 9rem;
+            /* top: 4rem; */
+        }
+        #pageAudioPlayer .m-playcontrol .btn-play{
+            background: url(../img/play.png) no-repeat center center;
+            background-size: cover;
+        }
+        #pageAudioPlayer .m-playcontrol .btn-pause{
+            background: url(../img/pause.png) no-repeat center center;
+            background-size: cover;
+        }
+        #pageAudioPlayer .m-playoptions{
+            height: 1.14rem;
+            display:flex;
+            width: 100%;
+            bottom: 0;
+        }
+        #pageAudioPlayer .m-playoptions a{
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            flex: 1;
+            color: #0e202c;
+        }
+        #pageAudioPlayer .m-playoptions a.active{
+            color:#FF00FF;
+        }
