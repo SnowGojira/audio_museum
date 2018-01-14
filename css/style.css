@@ -1,5 +1,15 @@
 
 /*公共样式*/
+.show{
+    display: block !important;
+}
+.hide{
+    opacity:0 !important;
+}
+.diss{
+    display: none !important;
+}
+
 html,body {
     background: #f9f9f9;
     overflow-x: hidden;
