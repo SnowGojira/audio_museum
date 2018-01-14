@@ -99,3 +99,38 @@ none{
                             margin-right: 5vw;
                             margin-top: 3.3rem;
                         }
+
+/*pageAudioPlayer*/
+#pageAudioPlayer{
+
+}
+
+        #pageAudioPlayer .header_wrap{
+            width:100%;
+            line-height: 0.86rem;
+            text-align: center;
+            justify-content: center;
+            position: fixed;
+            z-index: 9999;
+            padding:  4rem;
+            margin-top: 1rem;
+        }
+        #pageAudioPlayer .header{
+            width: 90%;
+            height: 100%;
+            display: flex;
+        }
+        #pageAudioPlayer .header .back, #pageAudioPlayer .header .hint{
+            width: 0.96rem;
+            height: 100%;
+            font-size: 0.5rem;
+
+        }
+                #pageAudioPlayer .header .hint .right_top{
+                    width: 11vw;
+                    margin-left: 75vw;
+                }
+                #pageAudioPlayer .header .back img{
+                    width: 3vw;
+                    margin-top: 0.8rem;
+                }
