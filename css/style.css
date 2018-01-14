@@ -8,3 +8,70 @@ html,body {
 none{
     display: none;
 }
+
+/*preload page*/
+#pagePreload{
+        text-align: center;
+}
+
+        #pagePreload svg{
+            margin-top: 37vh;
+            margin-left: 8vw;
+            width: 20vw;
+        }
+
+/*playlist page*/
+#pagePlaylist{
+        text-align: center;
+}
+
+        #pagePlaylist .slogan_wrap svg{
+            margin-top: 16vh;
+            width: 25vw;
+            margin-left: 7vw;
+        }
+
+        .playlist_wrap{
+            position: relative;
+            width: 100vw;
+            height: auto;
+            margin-top: 15vh;
+            text-align: center;
+
+        }
+
+                .playlist_wrap .song_list{
+                    display: table;
+                    text-align: center;
+                    width: 100%;
+                    height: auto;
+                    margin-left: 0;
+                }
+                        .playlist_wrap .song_list .song{
+                            display: table;
+                            margin: 2rem auto 2rem auto;
+                            width: 90%;
+                            height: 19vw;
+                            background: #ffffff;
+                            box-shadow: 5px 5px 20px #cfcfcf;
+                        }
+
+                        .playlist_wrap .song_list .song .poster img{
+                            float: left;
+                            width: 15vw;
+                            margin-top: 2vw;
+                            margin-left: 4vw;
+                        }
+
+                        .playlist_wrap .song_list .song .song_info{
+                            float: left;
+                            width
+                        }
+
+
+                        .playlist_wrap .song_list .song .song_btn img{
+                            width: 9vw;
+                            float: right;
+                            margin-right: 5vw;
+
+                        }
