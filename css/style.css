@@ -3,6 +3,7 @@
 html,body {
     background: #f9f9f9;
     overflow-x: hidden;
+    font-family: Arial,"微软雅黑 Light",sans-serif;
 }
 
 none{
@@ -35,9 +36,8 @@ none{
             position: relative;
             width: 100vw;
             height: auto;
-            margin-top: 15vh;
+            margin-top: 13.5vh;
             text-align: center;
-
         }
 
                 .playlist_wrap .song_list{
@@ -51,27 +51,41 @@ none{
                             display: table;
                             margin: 2rem auto 2rem auto;
                             width: 90%;
-                            height: 19vw;
+                            height: 20vw;
                             background: #ffffff;
-                            box-shadow: 5px 5px 20px #cfcfcf;
+                            box-shadow: 10px 5px 30px #e2e2e2;
                         }
 
                         .playlist_wrap .song_list .song .poster img{
                             float: left;
                             width: 15vw;
-                            margin-top: 2vw;
+                            margin-top: 1.5rem;
                             margin-left: 4vw;
                         }
 
                         .playlist_wrap .song_list .song .song_info{
                             float: left;
-                            width
+                            margin-left: 10vw;
+                            letter-spacing: 8px;
+                            text-align: left;
                         }
-
+                        .playlist_wrap .song_list .song .song_info .song_name{
+                            color:#565761;
+                            margin-top: 4.5rem;
+                            font-size: 2.5rem;
+                            font-weight: bold;
+                            line-height: 0.5rem;
+                        }
+                        .playlist_wrap .song_list .song .song_info .song_length{
+                            font-size: 1.5rem;
+                            margin-top: 0.5rem;
+                            color:#a8acb1;
+                            line-height: 0.5rem;
+                        }
 
                         .playlist_wrap .song_list .song .song_btn img{
                             width: 9vw;
                             float: right;
                             margin-right: 5vw;
-
+                            margin-top: 3.3rem;
                         }
