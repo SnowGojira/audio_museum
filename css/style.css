@@ -146,6 +146,12 @@ none{
             margin-top: 14%;
             /* margin-bottom: 10vh; */
             /* position: relative; */
+
+        }
+
+        .record_rotate{
+            -webkit-animation: rotate 40s linear infinite;
+            animation: rotate 40s linear infinite;
         }
 
         @-webkit-keyframes rotate{
@@ -192,7 +198,7 @@ none{
             font-size: 1.8rem;
             color:#a8acb1;
             line-height: 3.0rem;
-            font-weight: 50;
+            font-weight: 100;
         }
 
 
@@ -275,19 +281,11 @@ none{
             background: url(../img/pause.png) no-repeat center center;
             background-size: cover;
         }
-        #pageAudioPlayer .m-playoptions{
-            height: 1.14rem;
-            display:flex;
-            width: 100%;
-            bottom: 0;
-        }
-        #pageAudioPlayer .m-playoptions a{
-            display:flex;
-            justify-content: center;
-            align-items:center;
-            flex: 1;
-            color: #0e202c;
-        }
-        #pageAudioPlayer .m-playoptions a.active{
-            color:#FF00FF;
-        }
+
+/*lyric pages*/
+#pageLyricPlayer{
+
+}
+
+
+
