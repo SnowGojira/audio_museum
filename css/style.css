@@ -102,7 +102,8 @@ none{
 
 /*pageAudioPlayer*/
 #pageAudioPlayer{
-
+        width: auto;
+        height: 100vh;
 }
 
         #pageAudioPlayer .header_wrap{
@@ -136,14 +137,16 @@ none{
                 }
         #pageAudioPlayer .record_wrap{
             width: 100%;
-            height: auto;
+            height: 50vh;
             margin: 0 auto;
             overflow: hidden;
             text-align: center;
         }
         #pageAudioPlayer .record_wrap img{
-            width: 75vw;
-            margin-top: 11vh;
+            height: 75%;
+            margin-top: 18%;
+            /* margin-bottom: 10vh; */
+            /* position: relative; */
         }
 
         @-webkit-keyframes rotate{
@@ -164,13 +167,13 @@ none{
 
 /* 歌曲信息模块 */
         #pageAudioPlayer .g-songinfo{
-            margin-top: 2rem;
-            height: auto;
+            /* margin-top: 3vh; */
+            height: 25vh;
         }
         #pageAudioPlayer .m-songinfo{
             width: 70%;
             height: auto;
-            margin: 0 auto;
+            margin: 4% auto;
             overflow: hidden;
             letter-spacing: 7px;
         }
@@ -186,8 +189,8 @@ none{
             /* margin-top: 0.44rem; */
         }
         #pageAudioPlayer .m-songinfo .songdesc{
-            margin-top: 3rem;
-            font-size: 1.5rem;
+            margin-top: 10%;
+            font-size: 1.8rem;
             color:#a8acb1;
             line-height: 3.0rem;
         }
@@ -195,10 +198,10 @@ none{
 
 /* 音乐控制模块 */
         #pageAudioPlayer .g-panel{
-            height: auto;
+            height: 19vh;
         }
         #pageAudioPlayer .g-panel .m-progress{
-            margin: 0 auto;
+            margin: 5% auto;
             height: 1rem;
         }
         #pageAudioPlayer .g-panel .m-progress .songtime{
@@ -214,11 +217,23 @@ none{
         }
 
         #pageAudioPlayer .m-playcontrol{
-            width: 70vw;
-            margin: 0.34rem auto 0;
+            width: 70%;
+            margin: 9% auto 0;
             text-align: center;
             /* display:  flex; */
         }
+
+        #pageAudioPlayer .m-playcontrol .m-playcontrol-box{
+            height: 10vh;
+            width: 100%;
+            display: table;
+
+        }
+        #pageAudioPlayer .m-playcontrol .m-playcontrol-box li {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
         #pageAudioPlayer .m-playcontrol .btn{
             display: inline-block;
             background-size: cover;
