@@ -11,6 +11,7 @@
     <script src="lib/iscroll.js"></script>
     <script src="lib/jquery-3.1.0.min.js"></script>
     <script src="lib/jquery.touchSwipe.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
     <script src="js/manifest.js"></script>
     <script src="js/utils.js"></script>
@@ -18,7 +19,9 @@
 
 </head>
 <body>
-<div id="pagePreload" style="display: none;">
+<div id="pagePreload">
+
+
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.74 150.92">
         <defs>
             <style>
@@ -32,8 +35,14 @@
             </g>
         </g>
     </svg>
-</div>
+    <div class="container_wrap">
+        <div class="container">
+            <div id="bar" style="width:0%;"></div>
+        </div>
+    </div>
 
+</div>
+<audio id="audio" preload type="audio/mpeg"></audio>
 <!--播放页面-->
 <div id="pagePlaylist" style="display: none;">
     <!-- slogan模块 -->
@@ -55,35 +64,124 @@
     <!-- end of slogan模块 -->
 
     <!-- 歌曲列表模块 -->
-    <div class="playlist_wrap">
+    <div id="songlist" class="playlist_wrap">
             <ul class="song_list">
-                    <li class="song" data-src={{songSrc}} data-index={{id}}>
-                        <div class="poster">
-                            <img src="img/record.png">
-                        </div>
-                        <div class="song_info">
-                            <p class="song_name">xxx vol.xxx</p>
-                            <p class="song_length">04:28</p>
-                        </div>
-                        <div class="song_btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-                                <defs>
-                                    <style>.svg-play-1{fill:#45444d;}.svg-play-2{fill:#fff;}
-                                    </style>
-                                </defs>
-                                <title>play_btn</title>
-                                <g id="图层_2" data-name="图层 2"><g id="Layer_2" data-name="Layer 2"><circle class="svg-play-1" cx="90" cy="90" r="90"/><path class="svg-play-2" d="M70.9,123.64a5.09,5.09,0,0,1-5.1-5.1V61.46A5.1,5.1,0,0,1,73.3,57l53.41,28.54a5.1,5.1,0,0,1,0,9L73.3,123A5.08,5.08,0,0,1,70.9,123.64Z"/>
-                                </g>
-                                </g>
-                            </svg>
-                        </div>
-                    </li>
+                   <script id="sListTpl" type="text/x-handlebars-template">
+                       {{#each this}} {{#isInitData this @index}}
+                       <li class="song" data-src={{url}} data-index={{soundId}}>
+                           <div class="poster"><img class="poster_thumb" src="img/record.png"></div>
+                           <div class="song_info">
+                               <p class="song_name">{{title}}</p>
+                               <p class="song_length">{{info}}</p>
+                           </div>
+                           <div class="song_btn">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+                                   <defs>
+                                       <style>.svg-play-1{fill:#45444d;}.svg-play-2{fill:#fff;}
+                                       </style></defs>
+                                       <title>play_btn</title>
+                                                        <g id="图层_2" data-name="图层 2"><g id="Layer_2" data-name="Layer 2"><circle class="svg-play-1" cx="90" cy="90" r="90"/><path class="svg-play-2" d="M70.9,123.64a5.09,5.09,0,0,1-5.1-5.1V61.46A5.1,5.1,0,0,1,73.3,57l53.41,28.54a5.1,5.1,0,0,1,0,9L73.3,123A5.08,5.08,0,0,1,70.9,123.64Z"/>
+                                       </g>
+                                         </g>
+                               </svg>
+                           </div>
+                       </li>
+                       {{/isInitData}} {{/each}}
+                   </script>
+
 
             </ul>
     </div>
     <!--end of 歌曲列表模块 -->
 </div>
 
+<!--播放页面-->
+<div id="pageAudioPlayer" style="display: none;">
+    <!-- 头部模块 -->
+    <div class="header_wrap">
+        <div class="header">
+            <div class="back">
+                <img src="img/back.png">
+            </div>
+
+            <div class="hint">
+                <svg class="right_top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.74 150.92">
+                    <defs>
+                        <style>.svg-logo-1{
+                                        fill:none;
+                                        stroke:#555660;
+                                        stroke-linecap:round;
+                                        stroke-linejoin:round;stroke-width:2px;
+                                    }
+                                .svg-logo-2{fill:#555660;}
+                        </style>
+                    </defs>
+                    <title>资源 1</title>
+                    <g id="图层_2" data-name="图层 2">
+                        <g id="图层_1-2" data-name="图层 1">
+                            <path class="svg-logo-1" d="M 1 75.51 C 9 76.67 16 78.58 26.1 104 c 1.83 4.61 4.82 16 11.7 16 c 5 0 7.71 -3.55 9.8 -19.27 c 1.52 -11.45 2.85 -27.41 4.23 -46 c 0 0 2.12 -53.69 7.24 -53.69 c 0 0 3.9 -2.79 6.79 23.5 a 556.34 556.34 0 0 1 4.23 61.6 c 0.09 16.08 0.28 64.81 8.69 63.71 c 1.28 -0.17 4.31 -1.21 4.9 -21.83 c 0.5 -17.29 0.47 -51.89 1 -69.18 c 0.11 -3.25 0.52 -12.58 3.19 -12.58 c 0 0 3.36 -0.83 5.35 19.83 c 1.33 13.85 5.39 54.69 10.48 54.78 c 2 0 2.77 -4.67 4 -13.59 c 1.54 -10.82 4.78 -37.14 8.94 -37.16 c 0.79 0 4.49 1.28 7.13 20.92 c 0.61 4.54 2.52 17.25 6.24 17.23 c 2.88 0 3.39 -2 7.42 -17.23 c 1.35 -5.13 3.65 -6.38 14.71 -5.94" /><path class="svg-logo-1" d="M 152.23 85.15 c -4.77 -0.11 -9.4 2.31 -10.37 6.12 c -3.92 15.3 -3.61 17 -6.49 17.05 c -3.72 0 -5.7 -12.7 -6.31 -17.24 c -2.61 -19.37 -6 -21 -6.89 -21 c -4.16 -0.11 -8.1 25.63 -9.53 36.13 C 111 118.35 110 121 108.37 121 c -5.62 0.29 -8.59 -41 -9.83 -54.9 c -1.85 -20.67 -5.35 -19.83 -5.35 -19.83 c -2.67 0 -3.24 9.32 -3.34 12.57 c -0.57 17.29 -0.39 51.9 -0.89 69.19 c -0.59 20.63 -3.62 21.66 -4.9 21.83 c -8.41 1.1 -8.6 -47.64 -8.69 -63.71 a 556.06 556.06 0 0 0 -4.23 -61.6 C 68.61 -0.73 64.34 1.09 64.34 1.09 c -4.3 0 -6.66 40.16 -7.24 53.69 c -0.77 17.88 -2.56 34.58 -4.23 46 c -2.3 15.7 -4.58 19.32 -9.8 19.27 c -5.84 -0.05 -10.27 -11.29 -11.7 -16 C 22.23 73.52 7.06 75.56 4.53 75.49 c -1.08 0 -0.28 0 -3.53 0" /><path class="svg-logo-2" d="M 120.38 139.62 h 1.13 v -5 l 2 0.47 a 0.53 0.53 0 0 1 -0.47 0.65 v 3.92 h 1.37 v -2.32 a 2.91 2.91 0 0 1 1.49 0.63 v 0 h 2.59 c 0 -1.28 0 -2.5 0 -3.58 l 2 0.36 a 0.68 0.68 0 0 1 -0.43 0.68 c 0 0.74 0 1.6 0 2.54 h 3.13 l -0.16 0.27 h -3 a 43.26 43.26 0 0 0 0.32 5.23 a 14.81 14.81 0 0 0 0.67 -3.54 l 2 1.17 a 0.62 0.62 0 0 1 -0.6 0.56 a 18.84 18.84 0 0 1 -1.56 4.32 a 9.41 9.41 0 0 0 0.43 1.24 c 0.48 1.17 0.65 0.63 0.92 -0.16 s 0.52 -1.76 0.74 -2.32 c 0 1.69 -0.22 2.93 0.25 3.83 c 0.11 2.19 -1.1 2 -2 1.15 a 5.53 5.53 0 0 1 -1.37 -2.21 a 12.26 12.26 0 0 1 -4.23 3.4 a 24 24 0 0 0 3.71 -5 a 39.2 39.2 0 0 1 -0.85 -7.63 H 125.9 l 0 2.93 h 1 l 1.35 -0.52 l -0.11 5.25 c 0 0.94 -0.3 2.37 -2 2.48 a 1.57 1.57 0 0 0 -1 -1.75 a 10.88 10.88 0 0 1 -2.86 4.17 a 15.44 15.44 0 0 0 1.93 -5.86 l -2.72 2.41 a 0.72 0.72 0 0 1 -0.41 0.61 l -1 -2.32 l 1.42 -0.4 V 139.9 h -1 Z m 4 2 V 139.9 H 123 v 4.89 l 1.21 -0.34 A 24.08 24.08 0 0 0 124.41 141.65 Z m 0.77 4.8 l 0.88 0.09 c 0.41 0 0.58 -0.16 0.61 -0.66 l 0.14 -4.43 h -0.9 A 15.62 15.62 0 0 1 125.18 146.45 Z m 5.47 -11.37 c 1 0.18 1.65 0.49 1.76 1.1 a 1.56 1.56 0 0 1 -1 1.55 C 131.21 136.88 130.87 135.8 130.65 135.08 Z" /><path class="svg-logo-2" d="M 146 136.61 h 5.11 v -2.18 l 2.36 0.41 c 0 0.31 -0.25 0.76 -0.59 0.72 v 1 h 5.34 l -0.16 0.29 h -5.18 l 0 1.4 H 155 l 1.58 -0.61 v 3.74 A 2 2 0 0 1 155 141 h -2.2 v 1.58 h 2.23 l 1.64 -0.65 v 2.64 h 1.73 l -0.16 0.29 H 156.7 v 3.47 c -0.31 0.09 -1.24 0.23 -1.67 -0.25 v -1 h -2.2 v 1.71 c 0 1.33 -0.84 2 -2.54 2.05 c 0.11 -1 -0.61 -1.89 -2 -2.39 l 2.21 0.14 c 0.38 0 0.56 -0.22 0.56 -0.7 v -0.81 h -4.17 l -0.12 -0.3 h 4.3 v -1.94 h -5.14 l -0.13 -0.29 h 5.27 v -1.71 h -4.17 l -0.12 -0.29 h 4.3 V 141 h -2.18 v 0.54 a 2.62 2.62 0 0 1 -1.64 0.43 v -4.24 a 3.81 3.81 0 0 1 1.64 0.57 h 2.18 v -1.4 h -5 Z m 2.93 4.1 h 2.18 v -2.11 h -2.18 Z m 3.92 0 H 155 v -2.11 h -2.18 Z m 0 3.87 H 155 v -1.71 h -2.2 Z m 0 2.23 H 155 v -1.94 h -2.2 Z" /><path class="svg-logo-2" d="M 181.61 150.44 c -2.21 -2.3 -3.47 -6.67 -4 -10.34 c -0.43 4.08 -1.78 8.47 -6.73 10.67 c 2.82 -3.13 5.29 -7.41 4.91 -15.9 l 2.68 0.34 c 0.13 0.27 -0.36 0.9 -0.63 0.83 c 0 0.48 0 1 -0.05 1.51 a 15.17 15.17 0 0 0 6.1 10.65 A 8.18 8.18 0 0 0 181.61 150.44 Z" /><path class="svg-logo-2" d="M 207.62 146.52 A 2 2 0 0 1 206 146 v -0.88 h -6.33 a 7.62 7.62 0 0 1 -3.18 5.56 c 1.64 -3.17 1.69 -5.9 1.64 -10.23 a 3.36 3.36 0 0 1 1.67 0.67 H 206 v 0 l 1.67 -0.52 Z m -10.76 -9.86 h 5 v -2.21 l 2.32 0.38 a 0.67 0.67 0 0 1 -0.54 0.67 v 1.17 h 5.05 l -0.14 0.29 h -4.91 v 2.19 h 4.84 l -0.18 0.31 H 197.89 l -0.14 -0.31 h 4.16 V 137 H 197 Z m 2.79 8.2 h 2.41 v -3.44 h -2.3 A 25.26 25.26 0 0 1 199.65 144.87 Z m 4 0 H 206 v -3.44 h -2.32 Z" /><rect class="svg-logo-2" x="140.15" y="134.72" width="0.88" height="16.21" /><rect class="svg-logo-2" x="164.18" y="134.72" width="0.88" height="16.21" /><rect class="svg-logo-2" x="189.2" y="134.72" width="0.88" height="16.21" /><path class="svg-logo-2" d="M 129.41 124.77 h -5.76 v 3.6 a 0.5 0.5 0 0 0 0.11 0.34 a 0.72 0.72 0 0 0 0.36 0.19 v 0.23 H 121 v -0.23 a 0.76 0.76 0 0 0 0.37 -0.19 a 0.5 0.5 0 0 0 0.1 -0.34 V 119.9 a 0.51 0.51 0 0 0 -0.1 -0.34 a 0.76 0.76 0 0 0 -0.37 -0.19 v -0.23 h 3.12 v 0.23 a 0.68 0.68 0 0 0 -0.37 0.19 a 0.51 0.51 0 0 0 -0.1 0.34 v 3.22 h 5.76 V 119.9 a 0.51 0.51 0 0 0 -0.1 -0.34 a 0.67 0.67 0 0 0 -0.37 -0.19 v -0.23 h 3.12 v 0.23 a 0.75 0.75 0 0 0 -0.37 0.19 a 0.5 0.5 0 0 0 -0.1 0.34 v 8.47 a 0.49 0.49 0 0 0 0.1 0.34 a 0.75 0.75 0 0 0 0.37 0.19 v 0.23 h -3.12 v -0.23 a 0.72 0.72 0 0 0 0.36 -0.19 a 0.49 0.49 0 0 0 0.11 -0.34 Z" /><path class="svg-logo-2" d="M 138.23 128.36 V 119.9 a 0.5 0.5 0 0 0 -0.1 -0.34 a 0.75 0.75 0 0 0 -0.37 -0.19 v -0.23 h 3.12 v 0.23 a 0.67 0.67 0 0 0 -0.37 0.19 a 0.5 0.5 0 0 0 -0.1 0.34 v 8.47 a 0.51 0.51 0 0 0 0.11 0.35 a 0.73 0.73 0 0 0 0.36 0.19 v 0.23 h -3.12 v -0.23 a 0.75 0.75 0 0 0 0.37 -0.19 A 0.51 0.51 0 0 0 138.23 128.36 Z" /><path class="svg-logo-2" d="M 156.26 125.7 l 1.39 2.08 l -0.19 0.13 a 0.57 0.57 0 0 0 -0.34 -0.19 a 2.6 2.6 0 0 0 -0.74 0.35 a 10.39 10.39 0 0 1 -2.12 1 a 7.33 7.33 0 0 1 -2 0.25 a 6.37 6.37 0 0 1 -3.88 -1.12 a 4.73 4.73 0 0 1 -1.41 -1.62 a 5.09 5.09 0 0 1 -0.59 -2.44 A 4.94 4.94 0 0 1 147.4 121 a 5.79 5.79 0 0 1 4.83 -2 a 7.29 7.29 0 0 1 2 0.25 a 10.38 10.38 0 0 1 2.13 1 a 2.65 2.65 0 0 0 0.74 0.34 a 0.57 0.57 0 0 0 0.34 -0.19 l 0.19 0.13 l -1.39 2.09 l -0.2 -0.13 c 0 -0.08 0 -0.14 0 -0.2 a 0.56 0.56 0 0 0 -0.18 -0.4 a 3.15 3.15 0 0 0 -0.65 -0.45 a 5.52 5.52 0 0 0 -2.75 -0.73 a 4.1 4.1 0 0 0 -2.73 0.86 a 3.46 3.46 0 0 0 0 5.24 a 4.09 4.09 0 0 0 2.73 0.86 a 5.51 5.51 0 0 0 2.75 -0.73 a 3.07 3.07 0 0 0 0.65 -0.45 a 0.56 0.56 0 0 0 0.18 -0.4 a 1.91 1.91 0 0 0 0 -0.19 Z" /><path class="svg-logo-2" d="M 163.53 128.36 v -8.46 a 0.52 0.52 0 0 0 -0.1 -0.35 a 0.76 0.76 0 0 0 -0.37 -0.19 v -0.23 h 5.58 a 7.44 7.44 0 0 1 2.81 0.42 a 4 4 0 0 1 2.08 2 a 5.8 5.8 0 0 1 0.54 2.57 a 4.89 4.89 0 0 1 -1.59 3.94 a 4 4 0 0 1 -1.56 0.82 a 8.8 8.8 0 0 1 -2.28 0.25 h -5.58 v -0.23 a 0.76 0.76 0 0 0 0.37 -0.19 A 0.52 0.52 0 0 0 163.53 128.36 Z m 2.18 -0.88 h 2.74 a 4.24 4.24 0 0 0 2 -0.36 a 3.09 3.09 0 0 0 1.41 -3 a 3.59 3.59 0 0 0 -0.76 -2.47 a 2.36 2.36 0 0 0 -1 -0.68 a 5.15 5.15 0 0 0 -1.6 -0.2 h -2.74 Z" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- end of 头部模块 -->
+
+    <!-- 歌词模块 -->
+    <div class="record_wrap">
+            <img id="lrcimg" class="record_cover" src="img/record.png" />
+    </div>
+    <!-- END歌词模块 -->
+
+    <!-- 歌曲信息模块 -->
+    <div class="g-songinfo">
+        <div class="m-songinfo">
+            <h1 id="psongname" class="songname">xxx vol.xxx</h1>
+            <h2 id="psinger" class="songdesc">由此，作为观众，你不必也不能跟这些状态一一产生共鸣，所以你既不要抱着审美享受的心，也不要将获得某种不值一提的感动作为目的，你要做的是从台下混淆台上，这个世界的真相。</h2>
+        </div>
+    </div>
+    <!-- END歌曲信息模块 -->
+
+    <!-- 歌曲控制模块 -->
+    <div class="g-panel">
+        <div class="m-progress m-progress-song">
+            <div id="songprogress" class="progress"></div>
+            <div id="songbar" class="progressbar"></div>
+            <ul class="songtime">
+                <li class="start" id="start">0:00</li>
+                <li class="end" id="end">0:00</li>
+            </ul>
+        </div>
+        <div class="m-playcontrol">
+            <ul class="m-playcontrol-box">
+                <li><a class="btn btn-prev"></a></li>
+                <li>
+                    <svg class="btn btn-control btn-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+                        <defs>
+                            <style>.svg-play-1{fill:#45444d;}.svg-play-2{fill:#fff;}
+                            </style>
+                        </defs>
+                        <title>play_btn</title>
+                        <g id="图层_2" data-name="图层 2"><g id="Layer_2" data-name="Layer 2"><circle class="svg-play-1" cx="90" cy="90" r="90"/><path class="svg-play-2" d="M70.9,123.64a5.09,5.09,0,0,1-5.1-5.1V61.46A5.1,5.1,0,0,1,73.3,57l53.41,28.54a5.1,5.1,0,0,1,0,9L73.3,123A5.08,5.08,0,0,1,70.9,123.64Z"/>
+                        </g>
+                        </g>
+                    </svg>
+
+                </li>
+                <li><a class="btn btn-next"></a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<!--字幕页面-->
+<div id="pageLyricPlayer" style="display: none;">
+    <div class="big_record">
+        <img id="lrcBigimg" src="img/record.png" />
+    </div>
+</div>
 
 
 
