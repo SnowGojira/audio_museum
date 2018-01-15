@@ -93,7 +93,7 @@ none{
                             line-height: 0.5rem;
                         }
 
-                        .playlist_wrap .song_list .song .song_btn img{
+                        .playlist_wrap .song_list .song .song_btn svg{
                             width: 9vw;
                             float: right;
                             margin-right: 5vw;
@@ -113,8 +113,8 @@ none{
             justify-content: center;
             position: fixed;
             z-index: 9999;
-            padding:  4rem;
-            margin-top: 1rem;
+            padding: 3rem;
+            /* margin-top: 1rem; */
         }
         #pageAudioPlayer .header{
             width: 90%;
@@ -122,14 +122,13 @@ none{
             display: flex;
         }
         #pageAudioPlayer .header .back, #pageAudioPlayer .header .hint{
-            width: 0.96rem;
+            width: 1vw;
             height: 100%;
             font-size: 0.5rem;
-
         }
                 #pageAudioPlayer .header .hint .right_top{
                     width: 11vw;
-                    margin-left: 75vw;
+                    margin-left: 78vw;
                 }
                 #pageAudioPlayer .header .back img{
                     width: 3vw;
@@ -137,14 +136,14 @@ none{
                 }
         #pageAudioPlayer .record_wrap{
             width: 100%;
-            height: 50vh;
+            height: 47vh;
             margin: 0 auto;
             overflow: hidden;
             text-align: center;
         }
         #pageAudioPlayer .record_wrap img{
-            height: 75%;
-            margin-top: 18%;
+            height: 80%;
+            margin-top: 14%;
             /* margin-bottom: 10vh; */
             /* position: relative; */
         }
@@ -167,13 +166,13 @@ none{
 
 /* 歌曲信息模块 */
         #pageAudioPlayer .g-songinfo{
-            /* margin-top: 3vh; */
-            height: 25vh;
+            margin-top: 1vh;
+            height: 26vh;
         }
         #pageAudioPlayer .m-songinfo{
             width: 70%;
             height: auto;
-            margin: 4% auto;
+            margin: 0 auto;
             overflow: hidden;
             letter-spacing: 7px;
         }
@@ -193,21 +192,28 @@ none{
             font-size: 1.8rem;
             color:#a8acb1;
             line-height: 3.0rem;
+            font-weight: 50;
         }
 
 
 /* 音乐控制模块 */
         #pageAudioPlayer .g-panel{
             height: 19vh;
+            /* margin-top: 2vh; */
         }
         #pageAudioPlayer .g-panel .m-progress{
-            margin: 5% auto;
-            height: 1rem;
+            margin: 0 auto;
+            height: 0.1rem;
+            background-color: #cdccd1;
+            width: 85%;
+            margin-top: 8%;
         }
         #pageAudioPlayer .g-panel .m-progress .songtime{
-            font-size: 0.18rem;
+            font-size: 1.3rem;
             position:relative;
-            top: 3rem;
+            top: 1rem;
+            color: #cdcdc1;
+            letter-spacing:  4px;
         }
         #pageAudioPlayer .g-panel .m-progress .start{
             float:left;
@@ -217,10 +223,11 @@ none{
         }
 
         #pageAudioPlayer .m-playcontrol{
-            width: 70%;
-            margin: 9% auto 0;
+            width: 80%;
+            margin: 0 auto;
             text-align: center;
             /* display:  flex; */
+            margin-top: 11.5%;
         }
 
         #pageAudioPlayer .m-playcontrol .m-playcontrol-box{
@@ -257,6 +264,7 @@ none{
             height: 7rem;
             margin-left: 9rem;
             margin-right: 9rem;
+            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
             /* top: 4rem; */
         }
         #pageAudioPlayer .m-playcontrol .btn-play{
