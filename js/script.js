@@ -13,7 +13,9 @@ window.onload = function() {
         {src: 'img/play.png', id: 'sona5'},
         {src: 'img/prev.png', id: 'sona6'},
         {src: 'css/normalize.css', id: 'sona7'},
-        {src: 'css/style.css', id: 'sona8'}
+        {src: 'res/1.mp3', id: 'sona9'},
+        {src: 'res/3.mp3', id: 'sona11'}
+
     ];
 
     loader = new createjs.LoadQueue(false);
@@ -21,6 +23,7 @@ window.onload = function() {
     loader.setMaxConnections(100);
 // 关键！---一定要将其设置为 true, 否则不起作用。
     loader.maintainScriptOrder=true;
+    loader.installPlugin(createjs.Sound);
     loader.addEventListener('complete', handleComplete);//加载完成 调用handleComplete函数
     loader.addEventListener('progress', handleFileProgress);//加载完成 调用handleFileProgress函数
     loader.loadManifest(manifest);
@@ -44,8 +47,10 @@ function handleComplete(){
 
 
 $(function () {
-    var HTTPrequest='https://reqk3vwy88.execute-api.ap-northeast-1.amazonaws.com/development/places/0';
+    // var HTTPrequest='https://reqk3vwy88.execute-api.ap-northeast-1.amazonaws.com/development/places/0';
+    var HTTPrequest="data/data.json";
     var rootPath = window.location.href.replace(/\/\w+\.\w+/, "/");
+    console.log("root"+rootPath);
     var Settings = {
         initNum: 30, //列表初始化歌曲数
         reqNum: 5 //后续请求歌曲数
@@ -74,21 +79,13 @@ $(function () {
 
 
 
-        //
+        //播放頁面
         playPage: $("#pageAudioPlayer"),
         psongname: $("#psongname"),
         psinger: $("#psinger"),
-        lrcbox: $("#lrcbox"),
-        lrcwrap: $("#lrc-wrap"),
-        lrc: $("#lrc-wrap p"),
-        lrcbg: $("#lrc-bg"),
-        lrcimg: $("#lrcimg"),
-
-        btnBack: $(".play .back"),
+        btnBack: $(".back"),
         btnControl: $(".btn-control"),
         btnPlay: $(".btn-play"),
-        songCount: $("#totalsong"),
-
         start: $("#start"),
         end: $("#end"),
 
@@ -102,11 +99,12 @@ $(function () {
         prev: $(".btn-prev"),
         next: $(".btn-next"),
 
-        random: $(".icon-random"),
-        menu: $(".icon-menu"),
-        loop: $(".icon-loop"),
 
-        footer: $(".g-footer")
+        lrcbox: $("#lrcbox"),
+        lrcwrap: $("#lrc-wrap"),
+        lrc: $("#lrc-wrap p"),
+        lrcbg: $("#lrc-bg"),
+        lrcimg: $("#lrcimg")
 
 
     };
@@ -219,7 +217,7 @@ $(function () {
             return localStorage.getItem("h5player-" + key);
         }
         // 格式化歌词函数--将歌词字符串分割成时间数组-及其对应的-歌词数组
-        function createArrMap(lyric) {
+        /*function createArrMap(lyric) {
             var timeArr = [],
                 lyricArr = [];
             var tempArr = lyric.split("\n");
@@ -237,7 +235,7 @@ $(function () {
                 timeArr: timeArr,
                 lyricArr: lyricArr
             };
-        }
+        }*/
         // 格式化歌词时间为秒数
         function formatLyricTime(timeArr) {
             var result = [];
@@ -295,12 +293,11 @@ $(function () {
             makeRandom: makeRandom,
             setItem: setItem,
             getItem: getItem,
-            createArrMap: createArrMap,
+            /*createArrMap: createArrMap,*/
             formatLyricTime: formatLyricTime,
             getMoveDis: getMoveDis,
             getHighLightIndex: getHighLightIndex,
-            isScrollToBottom: isScrollToBottom,
-
+            isScrollToBottom: isScrollToBottom
         };
     })();
 
@@ -330,7 +327,7 @@ $(function () {
 
 
 
-        // EventHandler();
+        EventHandler();
     }
     //数据交互模块
 
@@ -418,17 +415,18 @@ $(function () {
         }
         // 生词歌曲信息（包括歌名|歌手名|歌词）
         function updateSongInfo(songinfo) {
+            console.log(songinfo);
             Dom.psongname.text(songinfo.songname);
             Dom.psinger.text(songinfo.singer);
-            renderLyric(songinfo);
+            /*renderLyric(songinfo);
             Dom.lrcwrap.css({
                 "top": 0
             });
             Dom.lrcimg.attr("src", songinfo.lrcimg);
-            Dom.lrc = Dom.lrcwrap.find("p");
+            Dom.lrc = Dom.lrcwrap.find("p");*/
         }
         // 生成歌词
-        function renderLyric(songinfo) {
+        /*function renderLyric(songinfo) {
             var arrMap = Util.createArrMap(songinfo.lyric);
             if (!lyricTpl) {
                 var tpl = "";
@@ -441,10 +439,10 @@ $(function () {
             }
             var preTpl = Handlebars.compile(lyricTpl);
             Dom.lrcwrap.html(preTpl(arrMap));
-        }
+        }*/
 
         // 歌词同步
-        function syncLyric(curS, formatTimeArr) {
+        /*function syncLyric(curS, formatTimeArr) {
             // console.log(Math.floor(curS) + "|" + lrcHighIndex);
             if (Math.floor(curS) >= formatTimeArr[lrcHighIndex]) {
                 Dom.lrc.eq(lrcHighIndex).addClass('current').siblings().removeClass('current');
@@ -472,13 +470,13 @@ $(function () {
                 "top": "-" + moveDis + "px"
             }, 100);
 
-        }
+        }*/
         return {
             renderList: renderList,
             updateList: updateList,
-            updateSongInfo: updateSongInfo,
-            syncLyric: syncLyric,
-            updateLrcView: updateLrcView,
+            updateSongInfo: updateSongInfo
+            /*syncLyric: syncLyric,
+            updateLrcView: updateLrcView,*/
         };
     }
 
@@ -492,7 +490,7 @@ $(function () {
         });
 
         // 滚动加载
-        Dom.sliderWrap.eq(0).on("scroll", function (e) {
+        /*Dom.sliderWrap.eq(0).on("scroll", function (e) {
             var updateSongModel = PlayerModel();
             var updateSongListUI = ModelUIFrame(Dom.songListContainer);
             var scrT = $(this).scrollTop();
@@ -510,7 +508,7 @@ $(function () {
                     updateSongModel.saveLyric(data);
                 });
             }
-        });
+        });*/
 
         // 歌曲播放完毕事件
         Dom.audio.onended = function () {
@@ -524,7 +522,7 @@ $(function () {
             var curPercent = Util.timeToPercent(curS, duration);
 
             // 歌词同步
-            songModelUI.syncLyric(curS, formatTimeArr);
+            // songModelUI.syncLyric(curS, formatTimeArr);
 
             // 更新歌曲时间，进度条
             Util.updataTime(Dom.start, curS);
@@ -533,24 +531,28 @@ $(function () {
         });
 
         // 点击一首歌曲
-        $(".g-songlist").on("click", ".poster", function (e) {
+        $(".playlist_wrap").on("click", ".song_btn", function (e) {
             e.preventDefault();
             e.stopPropagation();
 
+            console.log("click");
             // 列表视图相关
-            var listType = Dom.navBox.find(".nav.active").index();
+            /*var listType = Dom.navBox.find(".nav.active").index();
             if (listType === 0) {
                 Dom.songContainerWrap.find(".m-songlist").eq(1).find(".song").removeClass('active');
             } else if (listType === 1) {
                 Dom.songContainerWrap.find(".m-songlist").eq(0).find(".song").removeClass('active');
-            }
+            }*/
 
             $(this).parents(".song").addClass("active").siblings().removeClass("active");
-            Dom.index.addClass('hide');
+            // Dom.index.addClass('hide');
 
-            Dom.playPage.css({
+            /*Dom.playPage.css({
                 transform: "translateY(0%)"
-            });
+            });*/
+
+            Dom.index.hide();
+            Dom.playPage.show();
 
             // 音频相关
             if (Dom.audio.src == rootPath + $(this).parents(".song").data("src")) {
@@ -558,6 +560,7 @@ $(function () {
             }
             Dom.audio.src = $(this).parents(".song").data("src");
             Dom.audio.play();
+            $('#lrcimg').addClass('record_rotate');
             Dom.btnPlay.removeClass("btn-play").addClass("btn-pause");
 
             Dom.audio.setAttribute("index", $(this).parents(".song").data("index"));
@@ -572,13 +575,13 @@ $(function () {
 
             // 播放视图相关
             songInfo = {
-                songname: $(this).parents(".song").find(".lsongname").text(),
-                singer: $(this).parents(".song").find(".lsinger").text(),
-                lrcimg: "img/poster/" + $(this).parents(".song").data("index") + "-origin.jpg",
-                lyric: Util.getItem("lyric" + $(this).parents(".song").data("index"))
+                songname: $(this).parents(".song").find(".song_name").text(),
+                singer: $(this).parents(".song").data('info'),
+
+                lyric: Util.getItem("lyric" + $(this).parents(".song").data('info'))
             };
-            timeArr = Util.createArrMap(songInfo.lyric).timeArr;
-            formatTimeArr = Util.formatLyricTime(timeArr);
+            /*timeArr = Util.createArrMap(songInfo.lyric).timeArr;
+            formatTimeArr = Util.formatLyricTime(timeArr);*/
             songModelUI = ModelUIFrame();
             songModelUI.updateSongInfo(songInfo);
 
@@ -591,13 +594,14 @@ $(function () {
         Dom.btnBack.on("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            Dom.index.removeClass('hide');
-            Dom.playPage.css({
-                transform: "translateY(-100%)"
-            });
+            Dom.index.show();
+            Dom.playPage.hide();
+            // Dom.playPage.css({
+            //     transform: "translateY(-100%)"
+            // });
         });
 
-        function saveLoveSong() {
+        /*function saveLoveSong() {
             var cIndex = $(this).parents(".song").data("index"); // 当前点击歌曲索引
             var loveFlag = $(this).find(".icon-love").hasClass('active');
             var lsongArr = Util.getItem('lsonglist') === null ? [] : Util.getItem('lsonglist'); // 记录喜爱歌曲索引的数组
@@ -624,23 +628,25 @@ $(function () {
                 }
                 Util.setItem("lsonglist", lsongArr);
             }
-        }
+        }*/
         // 点击喜爱按钮
-        $(".g-songlist").on("click", ".loveflag", function (e) {
+       /* $(".g-songlist").on("click", ".loveflag", function (e) {
             e.preventDefault();
             e.stopPropagation();
 
             saveLoveSong.call(this);
             $(this).find(".icon-love").toggleClass('active');
         });
-
+*/
         // 播放或暂停按钮
         Dom.btnControl.on("click", function () {
             if ($(this).hasClass("btn-play")) {
                 Dom.audio.play();
+                $('#lrcimg').addClass('record_rotate');
                 $(this).removeClass('btn-play').addClass('btn-pause');
             } else {
                 Dom.audio.pause();
+                $('#lrcimg').removeClass('record_rotate');
                 $(this).removeClass('btn-pause').addClass('btn-play');
             }
         });
@@ -720,8 +726,10 @@ $(function () {
         var lrcIndex; // 歌词本地查找索引：歌曲列表中lrcIndex = index；我的最爱中lrcIndex可能和index不相等
         var listType; // 当前所处列表类型： 0为歌曲列表 1为我的最爱
         Dom.prev.on("click", function () {
-            listType = Dom.navBox.find(".nav.active").index();
-            index = getNextIndex(listType, "prev", Settings.playmode);
+            // listType = Dom.songContainerWrap.find(".active").index();
+            listType = 0;
+
+            index = getNextIndex(listType, "prev", 0);
 
             if (listType === 0) {
                 Dom.song.eq(index).addClass("active").siblings().removeClass('active');
@@ -736,17 +744,24 @@ $(function () {
             Dom.audio.play();
 
             // 播放视图相关
-            songInfo = {
+            /*songInfo = {
                 songname: Dom.song.eq(lrcIndex).find(".lsongname").text() || Dom.lsong.eq(index).find(".lsongname").text(), // 当播放的是“歌曲列表”未加载的歌曲时，使用“我的最爱”列表中的歌曲信息
                 singer: Dom.song.eq(lrcIndex).find(".lsinger").text() || Dom.lsong.eq(index).find(".lsinger").text(),
                 lrcimg: rootPath + "img/poster/" + lrcIndex + "-origin.jpg",
                 lyric: Util.getItem("lyric" + lrcIndex)
+            };*/
+
+            songInfo = {
+                songname: Dom.song.eq(lrcIndex).find(".song_name").text() , // 当播放的是“歌曲列表”未加载的歌曲时，使用“我的最爱”列表中的歌曲信息
+                singer: Dom.song.eq(lrcIndex).data("info") ,
+
             };
+
             lrcMoveIndex = 0;
             lrcHighIndex = 0;
             moveDis = 0;
 
-            timeArr = Util.createArrMap(songInfo.lyric).timeArr;
+            // timeArr = Util.createArrMap(songInfo.lyric).timeArr;
             formatTimeArr = Util.formatLyricTime(timeArr);
             songModelUI = ModelUIFrame();
             songModelUI.updateSongInfo(songInfo);
@@ -756,8 +771,9 @@ $(function () {
         //下一首
         Dom.next.on("click", function () {
 
-            listType = Dom.navBox.find(".nav.active").index();
-            index = getNextIndex(listType, "next", Settings.playmode);
+            // listType = Dom.navBox.find(".nav.active").index();
+            listType = 0;
+            index = getNextIndex(listType, "next", 0);
 
             if (listType === 0) {
                 Dom.song.eq(index).addClass("active").siblings().removeClass('active');
@@ -773,39 +789,26 @@ $(function () {
             Dom.audio.play();
 
             // 播放视图相关
-            songInfo = {
+            /*songInfo = {
                 songname: Dom.song.eq(lrcIndex).find(".lsongname").text() || Dom.lsong.eq(index).find(".lsongname").text(), // 当播放的是“歌曲列表”未加载的歌曲时，使用“我的最爱”列表中的歌曲信息
                 singer: Dom.song.eq(lrcIndex).find(".lsinger").text() || Dom.lsong.eq(index).find(".lsinger").text(),
                 lrcimg: rootPath + "img/poster/" + lrcIndex + "-origin.jpg",
                 lyric: Util.getItem("lyric" + lrcIndex)
+            };*/
+            songInfo = {
+                songname: Dom.song.eq(lrcIndex).find(".song_name").text() , // 当播放的是“歌曲列表”未加载的歌曲时，使用“我的最爱”列表中的歌曲信息
+                singer: Dom.song.eq(lrcIndex).data("info")
             };
             lrcMoveIndex = 0;
             lrcHighIndex = 0;
             moveDis = 0;
 
-            timeArr = Util.createArrMap(songInfo.lyric).timeArr;
+            // timeArr = Util.createArrMap(songInfo.lyric).timeArr;
             formatTimeArr = Util.formatLyricTime(timeArr);
             songModelUI = ModelUIFrame();
             songModelUI.updateSongInfo(songInfo);
         });
 
-        //随机播放
-        Dom.random.on("click", function () {
-            $(this).addClass("active").siblings().removeClass("active");
-            Settings.playmode = 1;
-        });
-
-        //列表循环
-        Dom.menu.on("click", function () {
-            $(this).addClass("active").siblings().removeClass("active");
-            Settings.playmode = 0;
-        });
-
-        //单曲循环播放
-        Dom.loop.on("click", function () {
-            $(this).addClass("active").siblings().removeClass("active");
-            Settings.playmode = 2;
-        });
 
         //歌曲进度条滑块滑动
         Dom.songbar.on("touchstart", function (e) {
@@ -903,30 +906,7 @@ $(function () {
 
         });
 
-        //音量控制
-        Dom.vbar.on("touchstart", function (e) {
-            var totalW = $(Dom.mvProgress).width();
-            var leftDis = $(Dom.sProgress).offset().left;
-            var percent = "";
-            e.preventDefault();
-            e.stopPropagation();
-            Dom.vbar.on("touchmove", function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var touchMove = e.originalEvent.targetTouches[0].clientX;
-                var dis = touchMove - leftDis > totalW ? totalW : touchMove - leftDis;
-                dis = touchMove - leftDis < 0 ? 0 : dis;
-                percent = Math.floor(dis / totalW * 100) + "%";
-                Dom.audio.volume = (dis / totalW).toFixed(1);
-                Util.updateProgress(Dom.vProgress, percent);
-                Util.updateBarPos(Dom.vbar, percent);
-            });
-            Dom.vbar.on("touchend", function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                Dom.vbar.off("touchmove touchend");
-            });
-        });
+
 
         // 歌词海报切换
         Dom.lrcbox.on("click", function () {
@@ -936,7 +916,7 @@ $(function () {
 
         // 歌曲列表向上或向下滑动
         var top = 0;
-        Dom.sliderWrap.each(function () {
+        /*Dom.sliderWrap.each(function () {
             $(this).on("scroll", function () {
                 var tempTop = $(this).scrollTop();
                 if (tempTop - top > 10) { //防止弹性滚动造成的不是预期的效果
@@ -952,7 +932,7 @@ $(function () {
                 }
                 top = tempTop;
             });
-        });
+        });*/
 
         // 列表切换(点击)
         $(".nav").on("click", function () {

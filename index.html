@@ -13,8 +13,6 @@
     <script src="lib/jquery.touchSwipe.min.js"></script>
     <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
-    <script src="js/manifest.js"></script>
-    <script src="js/utils.js"></script>
     <script src="js/script.js"></script>
 
 </head>
@@ -68,11 +66,11 @@
             <ul class="song_list">
                    <script id="sListTpl" type="text/x-handlebars-template">
                        {{#each this}} {{#isInitData this @index}}
-                       <li class="song" data-src={{url}} data-index={{soundId}}>
+                       <li class="song" data-src={{url}} data-index={{soundId}} data-info={{info}}>
                            <div class="poster"><img class="poster_thumb" src="img/record.png"></div>
                            <div class="song_info">
                                <p class="song_name">{{title}}</p>
-                               <p class="song_length">{{info}}</p>
+                               <p class="song_length">{{createdAtString}}</p>
                            </div>
                            <div class="song_btn">
                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
